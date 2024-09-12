@@ -17,6 +17,7 @@ description = {
 build = {
    type = "builtin",
    modules = {
-	   lhk = 'init.lua'
+	   lhk = 'lhk/init.lua',
+	   ['lhk.core_wrapper'] = 'lhk/core_wrapper.lua'
    }
 }
