@@ -18,6 +18,7 @@ build = {
    type = "builtin",
    modules = {
 	   lhk = 'lhk/init.lua',
-	   ['lhk.core_wrapper'] = 'lhk/core_wrapper.lua'
+	   ['lhk.core_wrapper'] = 'lhk/core_wrapper.lua',
+	   ['lhk.definitions.lhk_core'] = 'definitions/lhk_core.lua'
    }
 }
