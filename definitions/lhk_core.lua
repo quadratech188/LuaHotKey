@@ -28,24 +28,24 @@ end
 G.keyboardSubHook = {}
 
 ---Register a keyboardSubhook that runs `actions` when `keyInfo` matches the currently pressed key
----@param keyInfo table Consists of:
+---@param keyFilter table Consists of:
 ---{
 ---    `vkCode`: Matches the virtual keycode of the pressed key
 ---    `scanCode`: Matches the scancode of the pressed key
 ---    `stroke`: Matches the stroke (press / release) of the pressed key
 ---    `autorepeated`: Matches whether the key was autorepeated
----    `modifiers`: An array of modifier keys (LWIN, LMENU, LCONTROL, LSHIFT, RMENU, RCONTROL, RSHIFT)
+---    `modifiers`: An array of modifier keys to be matched (LWIN, LMENU, LCONTROL, LSHIFT, RMENU, RCONTROL, RSHIFT)
 ---}
 ---When an entry doesn't exist, the corresponding condition is ignored.
 ---@param actions function|table Can either be:
 ---* A function: Receives a lhk.KeyStroke of the current keystroke
 ---* A lhk.KeyStroke array: Each keystroke is sent by lhk
----@param flags table Consists of:
+---@param flags table? Consists of:
 ---{
 ---    `block`: Whether to block the original keystroke; default `true`
 ---    `blockAutorepeat`: Whether to block the original autorepeated keystroke; default `block`
 ---}
-function G.keyboardSubHook.register(keyInfo, actions, flags)
+function G.keyboardSubHook.register(keyFilter, actions, flags)
 end
 
 G.keyboard = {}
