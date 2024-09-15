@@ -1,5 +1,12 @@
-local G = require 'lhk_core'
-local vkCode = require 'vkCode'
+local lhk_core = require 'lhk_core'
+
+local G = {}
+
+G.start = lhk_core.start
+
+G.KeyStroke = {}
+
+G.KeyStroke.new = lhk_core.KeyStroke.new
 
 ---@enum lhk.KeyStroke.strokes
 G.KeyStroke.strokes = {
@@ -16,11 +23,19 @@ function G.KeyStroke.fromVkCode(vkCode, stroke)
 end
 
 ---Create a new lhk.KeyStroke userdata
----@param scanCode integer Virtual keycode of the keystroke
+---@param scanCode integer Scancode of the keystroke
 ---@param stroke lhk.KeyStroke.strokes Stroke of the keystroke (press / release)
 ---@return lhk.KeyStroke
 function G.KeyStroke.fromScanCode(scanCode, stroke)
 	return G.KeyStroke.new(nil, scanCode, stroke)
 end
+
+G.keyboardSubHook = {}
+
+G.keyboardSubHook.register = lhk_core.keyboardSubHook.register
+
+G.keyboard = {}
+
+G.keyboard = lhk_core.keyboard
 
 return G
