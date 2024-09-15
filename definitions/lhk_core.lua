@@ -11,15 +11,9 @@ local G = {}
 
 G.KeyStroke = {}
 
----@enum lhk.KeyStroke.strokes
-G.KeyStroke.strokes = {
-	press = false,
-	release = true
-}
-
 ---Create a new lhk.KeyStroke userdata
----@param vkCode integer Virtual keycode of the keystroke
----@param scanCode integer Keyboard scancode of the keystroke
+---@param vkCode integer? Virtual keycode of the keystroke
+---@param scanCode integer? Keyboard scancode of the keystroke
 ---@param stroke lhk.KeyStroke.strokes Stroke of the keystroke (press / release)
 ---@return lhk.KeyStroke
 function G.KeyStroke.new(vkCode, scanCode, stroke)
@@ -34,7 +28,7 @@ G.keyboardSubHook = {}
 ---    `scanCode`: Matches the scancode of the pressed key
 ---    `stroke`: Matches the stroke (press / release) of the pressed key
 ---    `autorepeated`: Matches whether the key was autorepeated
----    `modifiers`: An array of modifier keys to be matched (LWIN, LMENU, LCONTROL, LSHIFT, RMENU, RCONTROL, RSHIFT)
+---    `modifiers`: A table of the state of each modifier key to be matched (LWIN, LMENU, LCONTROL, LSHIFT, RMENU, RCONTROL, RSHIFT)
 ---}
 ---When an entry doesn't exist, the corresponding condition is ignored.
 ---@param actions function|table Can either be:
