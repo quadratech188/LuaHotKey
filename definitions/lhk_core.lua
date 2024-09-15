@@ -28,7 +28,7 @@ G.keyboardSubHook = {}
 ---    `scanCode`: Matches the scancode of the pressed key
 ---    `stroke`: Matches the stroke (press / release) of the pressed key
 ---    `autorepeated`: Matches whether the key was autorepeated
----    `modifiers`: A table of the state of each modifier key to be matched (LWIN, LMENU, LCONTROL, LSHIFT, RMENU, RCONTROL, RSHIFT)
+---    `modifiers`: A table of the state of each modifier key to be matched (LWIN, LMENU, LCONTROL, LSHIFT, RWIN, RMENU, RCONTROL, RSHIFT)
 ---}
 ---When an entry doesn't exist, the corresponding condition is ignored.
 ---@param actions function|table Can either be:
