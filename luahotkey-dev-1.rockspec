@@ -19,6 +19,9 @@ build = {
    modules = {
 	   lhk = 'lhk/init.lua',
 	   ['lhk.core_wrapper'] = 'lhk/core_wrapper.lua',
-	   ['lhk.definitions.lhk_core'] = 'definitions/lhk_core.lua'
+	   ['lhk.definitions.lhk_core'] = 'definitions/lhk_core.lua',
+
+	   vkCode = 'vkCode/init.lua',
+	   ['vkCode.vkCodes'] = 'vkCode/vkCodes.lua'
    }
 }
