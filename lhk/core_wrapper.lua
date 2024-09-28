@@ -30,9 +30,9 @@ function G.KeyStroke.fromScanCode(scanCode, stroke)
 	return G.KeyStroke.new(nil, scanCode, stroke)
 end
 
-G.keyboardSubHook = {}
+G.Layer = {}
 
-G.keyboardSubHook.register = lhk_core.keyboardSubHook.register
+G.Layer = lhk_core.Layer
 
 G.keyboard = {}
 

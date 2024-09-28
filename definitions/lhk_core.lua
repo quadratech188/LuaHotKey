@@ -19,9 +19,37 @@ G.KeyStroke = {}
 function G.KeyStroke.new(vkCode, scanCode, stroke)
 end
 
-G.keyboardSubHook = {}
+G.Layer = {}
 
----Register a keyboardSubhook that runs `actions` when `keyInfo` matches the currently pressed key
+---Create a new layer (Not activated by default)
+---@param name string Name of the layer
+---@return lhk.Layer
+function G.Layer.new(name)
+end
+
+---Get a layer by name
+---@param name string Name of the layer
+---@return lhk.Layer?
+function G.Layer.get(name)
+end
+
+---@class lhk.Layer
+---@field name string Name of the layer
+---@field enabled boolean Whether the layer is enabled
+local Layer = {}
+
+---Activate the layer
+---@param self lhk.Layer
+function Layer.activate(self)
+end
+
+---Deactivate the layer
+---@param self lhk.Layer
+function Layer.deactivate(self)
+end
+
+---Register a Keyboard hook that runs `actions` when `keyInfo` matches the currently pressed key
+---@param self lhk.Layer
 ---@param keyFilter table Consists of:
 ---{
 ---    `vkCode`: Matches the virtual keycode of the pressed key
@@ -39,7 +67,7 @@ G.keyboardSubHook = {}
 ---    `block`: Whether to block the original keystroke; default `true`
 ---    `blockAutorepeat`: Whether to block the original autorepeated keystroke; default `block`
 ---}
-function G.keyboardSubHook.register(keyFilter, actions, flags)
+function Layer.register(self, keyFilter, actions, flags)
 end
 
 G.keyboard = {}
