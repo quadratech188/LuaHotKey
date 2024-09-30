@@ -34,9 +34,19 @@ function G.Layer.get(name)
 end
 
 ---@class lhk.Layer
----@field name string Name of the layer
----@field enabled boolean Whether the layer is enabled
 local Layer = {}
+
+---Get the layer's name
+---@param self lhk.Layer
+---@return string
+function Layer.name(self)
+end
+
+---Get whether the layer is activated
+---@param self lhk.Layer
+---@return boolean
+function Layer.activated(self)
+end
 
 ---Activate the layer
 ---@param self lhk.Layer
