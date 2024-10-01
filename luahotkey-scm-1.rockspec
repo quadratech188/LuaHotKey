@@ -1,7 +1,8 @@
 package = "luahotkey"
-version = "dev-1"
+version = "scm-1"
 source = {
-   url = "git+https://github.com/quadratech188/LuaHotKey"
+   url = "git+https://github.com/quadratech188/LuaHotKey",
+   branch = "main"
 }
 supported_platforms = {
 	'windows', 'win32', 'cygwin'
