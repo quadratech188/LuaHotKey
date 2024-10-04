@@ -64,11 +64,11 @@ end
 ---@param self lhk.Layer
 ---@param keyFilter table Consists of:
 ---{
----    `vkCode`: Matches the virtual keycode of the pressed key
----    `scanCode`: Matches the scancode of the pressed key
----    `stroke`: Matches the stroke (press / release) of the pressed key
----    `autorepeated`: Matches whether the key was autorepeated
----    `modifiers`: A table of the state of each modifier key to be matched (LWIN, LMENU, LCONTROL, LSHIFT, RWIN, RMENU, RCONTROL, RSHIFT)
+---    `vkCode` (int): Matches the virtual keycode of the pressed key
+---    `scanCode` (int): Matches the scancode of the pressed key
+---    `stroke` ('press'|'release'): Matches the stroke of the pressed key
+---    `autorepeated` (int): Matches whether the key was autorepeated
+---    `modifiers` (int): A table of the state of each modifier key to be matched (LWIN, LMENU, LCONTROL, LSHIFT, RWIN, RMENU, RCONTROL, RSHIFT)
 ---}
 ---When an entry doesn't exist, the corresponding condition is ignored.
 ---@param actions function|table Can either be:
@@ -76,8 +76,8 @@ end
 ---* A lhk.KeyStroke array: Each keystroke is sent by lhk
 ---@param flags table? Consists of:
 ---{
----    `block`: Whether to block the original keystroke; default `true`
----    `blockAutorepeat`: Whether to block the original autorepeated keystroke; default `block`
+---    `block` (bool): Whether to block the original keystroke; default `true`
+---    `blockAutorepeat` (bool): Whether to block the original autorepeated keystroke; default `block`
 ---}
 function Layer.register(self, keyFilter, actions, flags)
 end
