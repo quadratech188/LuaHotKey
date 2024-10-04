@@ -4,17 +4,19 @@
 
 local G = {}
 
+---@alias lhk.Strokes 'press'|'release'|'mirror'
+
 ---@class lhk.KeyStroke
 ---@field vkCode integer Virtual keycode of the keystroke
 ---@field scanCode integer Keyboard scancode of the keystroke
----@field stroke lhk.KeyStroke.strokes Stroke of the keystroke (press / release)
+---@field stroke lhk.Strokes Stroke of the keystroke (press / release)
 
 G.KeyStroke = {}
 
 ---Create a new lhk.KeyStroke userdata
 ---@param vkCode integer? Virtual keycode of the keystroke
 ---@param scanCode integer? Keyboard scancode of the keystroke
----@param stroke lhk.KeyStroke.strokes Stroke of the keystroke (press / release)
+---@param stroke lhk.Strokes Stroke of the keystroke (press / release)
 ---@return lhk.KeyStroke
 function G.KeyStroke.new(vkCode, scanCode, stroke)
 end
