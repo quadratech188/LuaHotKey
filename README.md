@@ -5,4 +5,5 @@ The C++ source can be found [here](https://github.com/quadratech188/lhk_core).
 
 # Requirements
 - CMake
-- G++
+- GCC
+- MinGW, or another build system set as cmake_generator
