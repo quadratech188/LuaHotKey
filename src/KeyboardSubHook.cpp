@@ -71,6 +71,7 @@ namespace KeyboardSubHook {
 	SubHook::SubHook(lua_State* L, int index) {
 		this->data = getActions(L, index);
 		if (lua_gettop(L) >= index + 1) {
+			luaL_argcheck(L, lua_istable(L, index + 1), index + 1, "Expected table");
 			this->flags = Flags(L, index + 1);
 		}
 		else {

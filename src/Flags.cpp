@@ -1,4 +1,5 @@
 #include "Flags.h"
+#include <stdexcept>
 
 static bool boolFromLua(lua_State* L, const char* index, int tableIndex, bool defaultBool) {
 	lua_getfield(L, tableIndex, index);
@@ -16,14 +17,6 @@ Flags::Flags() {
 }
 
 Flags::Flags(lua_State* L, int index) {
-	if (lua_isnil(L, index)) {
-		block = true;
-		blockAutoRepeat = true;
-	}
-
-	//TODO: Better error handling
-	luaL_argcheck(L, lua_istable(L, index), index, NULL);
-
 	this->block = boolFromLua(L, "block", index, true);
 	this->blockAutoRepeat = boolFromLua(L, "blockAutoRepeat", index, this->block);
 }
