@@ -34,6 +34,7 @@ build = {
 			[''] = 'lib/lhk_core.dll'
 		},
 		lua = {
+			['definitions.lhk_core'] = 'definitions/lhk_core.lua'
 		}
 	}
 }
