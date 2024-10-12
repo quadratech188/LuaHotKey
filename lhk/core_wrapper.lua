@@ -3,6 +3,7 @@ local lhk_core = require 'lhk_core'
 local G = {}
 
 G.start = lhk_core.start
+G.stop = lhk_core.stop
 
 G.KeyStroke = {}
 
