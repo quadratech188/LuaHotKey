@@ -91,8 +91,12 @@ G.keyboard = {}
 function G.keyboard.getKeyState(vkCode)
 end
 
----Start lhk; this function will run indefinitely
+---Start lhk; this function will not return until lhk.stop() is called (Usually from a keyboard hook)
 function G.start()
+end
+
+---Stop lhk and continue running the script
+function G.stop()
 end
 
 return G

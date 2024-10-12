@@ -11,6 +11,7 @@ namespace KeyboardHook {
 	extern bool shouldProcess;
 
 	bool hook();
+	void unHook();
 
 	LRESULT CALLBACK hookProc(int nCode, WPARAM wParam, LPARAM lParam);
 }

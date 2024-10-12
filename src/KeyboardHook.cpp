@@ -15,10 +15,15 @@ namespace KeyboardHook {
 	bool shouldProcess = true;
 	KeyStroke keyStroke;
 	KeyStroke prevKeyStroke;
+	HHOOK hookHandle;
 
 	bool hook() {
-		SetWindowsHookEx(WH_KEYBOARD_LL, hookProc, GetModuleHandle(NULL), 0);
+		hookHandle = SetWindowsHookEx(WH_KEYBOARD_LL, hookProc, GetModuleHandle(NULL), 0);
 		return true;
+	}
+
+	void unHook() {
+		UnhookWindowsHookEx(hookHandle);
 	}
 
 	LRESULT CALLBACK hookProc(int nCode, WPARAM wParam, LPARAM lParam) {

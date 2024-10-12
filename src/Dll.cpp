@@ -22,6 +22,7 @@ namespace LuaHotKey {
 
 	const luaL_Reg luaFunctions[] = {
 		{"start", start},
+		{"stop", stop},
 		{NULL, NULL}
 	};
 
@@ -39,6 +40,12 @@ namespace LuaHotKey {
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+		return 0;
+	}
+
+	int stop(lua_State* L) {
+		KeyboardHook::unHook();
+		PostQuitMessage(0);
 		return 0;
 	}
 }
