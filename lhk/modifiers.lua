@@ -3,7 +3,7 @@ local G = {}
 ---Return an array of tables of modifier key states extracted from `str`
 ---If '!' exists in the string, the function will create a table where LMENU is on, and another where RMENU is on (unless < or > exists before it)
 ---@param str string
----@return table An array of modifier tables
+---@return table filterArray An array of modifier tables
 function G.filterFromAHK(str)
 	local map = {
 		['#'] = 'WIN',
