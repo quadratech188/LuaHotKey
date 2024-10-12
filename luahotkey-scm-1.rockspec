@@ -8,7 +8,6 @@ supported_platforms = {
 	'windows', 'win32', 'cygwin'
 }
 dependencies = {
-	'lhk_core >= 0.1',
 	'lua >= 5.1'
 }
 description = {
@@ -16,14 +15,28 @@ description = {
    license = "MIT"
 }
 build = {
-   type = "builtin",
-   modules = {
-	   lhk = 'lhk/init.lua',
-	   ['lhk.core_wrapper'] = 'lhk/core_wrapper.lua',
-	   ['lhk.modifiers'] = 'lhk/modifiers.lua',
-	   ['lhk.KeyStrokes'] = 'lhk/KeyStrokes.lua',
+	variables = {
+		LUA_LIBDIR = "$(LUA_LIBDIR)",
+		LUA_INCDIR = "$(LUA_INCDIR)",
+		LUA_LIBDIR_FILE = "$(LUA_LIBDIR_FILE)"
+	},
+	type = "cmake",
 
-	   vkCode = 'vkCode/init.lua',
-	   ['vkCode.vkCodes'] = 'vkCode/vkCodes.lua'
-   }
+	install = {
+		lib = {
+			[''] = 'lib/lhk_core.dll'
+		},
+		lua = {
+			['definitions.lhk_core'] = 'definitions/lhk_core.lua',
+
+			lhk = 'lhk/init.lua',
+		    ['lhk.core_wrapper'] = 'lhk/core_wrapper.lua',
+		    ['lhk.modifiers'] = 'lhk/modifiers.lua',
+		    ['lhk.KeyStrokes'] = 'lhk/KeyStrokes.lua',
+
+		    vkCode = 'vkCode/init.lua',
+		    ['vkCode.vkCodes'] = 'vkCode/vkCodes.lua'
+
+		}
+	}
 }
