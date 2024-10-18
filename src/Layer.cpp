@@ -2,7 +2,6 @@
 
 #include <optional>
 
-#include "Definitions.h"
 #include "KeyboardSubHook.h"
 #include "LuaHeader.h"
 

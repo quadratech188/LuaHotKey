@@ -1,6 +1,5 @@
 #include "KeyStrokeLua.h"
 
-#include "Definitions.h"
 #include <format>
 #include <string>
 

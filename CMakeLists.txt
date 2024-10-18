@@ -26,7 +26,6 @@ else()
 endif()
 
 set(LibSourceFiles
-    "src/Definitions.h"
     "src/KeyboardHook.cpp"
     "src/KeyboardHook.h"
     "src/KeyStroke.cpp"
