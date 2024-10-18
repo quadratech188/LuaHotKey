@@ -1,61 +1,46 @@
 #include "Layers.h"
 
-#include <stdexcept>
-#include <string>
-#include <unordered_map>
+#include <memory>
+#include <vector>
 
+#include "Layer.h"
 #include "LuaHeader.h"
 
+using namespace LayerNS;
+using namespace KeyboardSubHook;
+
 namespace Layers {
-	std::unordered_map<std::string, Layer> layers;
-	std::unordered_map<std::string, LayerIt> activatedLayers;
 
-	bool exists(std::string name) {
-		auto layer = layers.find(name);
+	std::vector<std::shared_ptr<Layer>> layers = std::vector<std::shared_ptr<Layer>>();
 
-		return layer != layers.end();
+	const luaL_Reg luaFunctions[] = {
+		{"set", set},
+		{NULL, NULL}
+	};
+	
+	void open(lua_State* L) {
+		lua_newtable(L);
+		luaL_setfuncs(L, luaFunctions, 0);
+
+		lua_setfield(L, -2, "layers");
 	}
 
-	bool activated(std::string name) {
-		auto layer = activatedLayers.find(name);
+	int set(lua_State* L) {
+		luaL_argcheck(L, lua_istable(L, 1), 1, "Expected lhk.Layer table");
 
-		return layer != activatedLayers.end();
-	}
+		int length = lua_rawlen(L, 1);
 
-	void newLayer(std::string name) {
-		if (exists(name)) {
-			throw std::runtime_error("Key already exists");
+		layers.clear();
+
+		layers.reserve(length);
+
+		for (int i = 0; i < length; i++) {
+			lua_rawgeti(L, 1, i + 1); // lua indices start at 1
+
+			LayerUdata* userdataPtr = LayerNS::get(L, -1);
+
+			layers.push_back(userdataPtr->layer);
 		}
-
-		layers[name] = Layer();
-	}
-
-	LayerIt get(std::string name) {
-		auto layer = layers.find(name);
-		if (layer == layers.end()) {
-			throw std::runtime_error("Key not found");
-		}
-				
-		return layer;
-	}
-
-	void activate(std::string name) {
-		auto layer = get(name);
-
-		layer->second.activated = true;
-
-		activatedLayers[name] = layer;
-	}
-
-	void deactivate(std::string name) {
-		auto layer = activatedLayers.find(name);
-
-		if (layer == activatedLayers.end()) {
-			throw std::runtime_error("Key not found");
-		}
-
-		layer->second->second.activated = false;
-
-		activatedLayers.erase(layer);
+		return 0;
 	}
 }

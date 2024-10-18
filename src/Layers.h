@@ -1,25 +1,17 @@
 #pragma once
 
-#include <string>
-#include <unordered_map>
+#include <memory>
+#include <vector>
 
-#include "AttributeTree.h"
-#include "KeyboardSubHook.h"
+#include "Layer.h"
+#include "LuaHeader.h"
+
+using namespace LayerNS;
 
 namespace Layers {
-	struct Layer {
-		AttributeTree<KeyboardSubHook::SubHook> subHooks;
-		bool activated;
-	};
+	extern std::vector<std::shared_ptr<Layer>> layers;
 
-	extern std::unordered_map<std::string, Layer> layers;
-	typedef decltype(layers)::iterator LayerIt;
-	extern std::unordered_map<std::string, LayerIt> activatedLayers;
+	void open(lua_State* L);
 
-	bool exists(std::string name);
-	bool activated(std::string name);
-	void newLayer(std::string name);
-	LayerIt get(std::string name);
-	void activate(std::string name);
-	void deactivate(std::string name);
+	int set(lua_State* L);
 }

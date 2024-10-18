@@ -9,7 +9,6 @@
 #include "KeyStrokeLua.h"
 #include "Keyboard.h"
 #include "KeyboardHook.h"
-#include "LayerLua.h"
 #include "LuaHeader.h"
 #include "Modifiers.h"
 #include "Stroke.h"

@@ -29,6 +29,8 @@ G.Layer = {}
 
 G.Layer = lhk_core.Layer
 
+G.layers = lhk_core.layers
+
 G.keyboard = {}
 
 return G

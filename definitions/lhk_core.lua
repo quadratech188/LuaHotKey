@@ -29,36 +29,8 @@ G.Layer = {}
 function G.Layer.new(name)
 end
 
----Get a layer by name
----@param name string Name of the layer
----@return lhk.Layer?
-function G.Layer.get(name)
-end
-
 ---@class lhk.Layer
 local Layer = {}
-
----Get the layer's name
----@param self lhk.Layer
----@return string
-function Layer.name(self)
-end
-
----Get whether the layer is activated
----@param self lhk.Layer
----@return boolean
-function Layer.activated(self)
-end
-
----Activate the layer
----@param self lhk.Layer
-function Layer.activate(self)
-end
-
----Deactivate the layer
----@param self lhk.Layer
-function Layer.deactivate(self)
-end
 
 ---Register a Keyboard hook that runs `actions` when `keyInfo` matches the currently pressed key
 ---@param self lhk.Layer
@@ -80,6 +52,13 @@ end
 ---    `blockAutorepeat` (bool): Whether to block the original autorepeated keystroke; default `block`
 ---}
 function Layer.register(self, keyFilter, actions, flags)
+end
+
+G.layers = {}
+
+---Sets an array of layers to be used by lhk
+---@param layers table An array of layers
+function G.layers.set(layers)
 end
 
 G.keyboard = {}

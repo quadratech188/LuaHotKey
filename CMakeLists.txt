@@ -46,8 +46,8 @@ set(LibSourceFiles
     "src/Flags.h"
 	"src/Layers.cpp"
 	"src/Layers.h"
-	"src/LayerLua.cpp"
-	"src/LayerLua.h"
+	"src/Layer.cpp"
+	"src/Layer.h"
 	"src/Stroke.cpp"
 	"src/Stroke.h"
 )

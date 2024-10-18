@@ -5,7 +5,8 @@
 #include "KeyStrokeLua.h"
 #include "Keyboard.h"
 #include "KeyboardHook.h"
-#include "LayerLua.h"
+#include "Layer.h"
+#include "Layers.h"
 #include "LuaHeader.h"
 
 extern "C" __declspec(dllexport) int luaopen_lhk_core(lua_State* L) {
@@ -13,7 +14,8 @@ extern "C" __declspec(dllexport) int luaopen_lhk_core(lua_State* L) {
 	
 	KeyStrokeLua::open(L);
 	Keyboard::open(L);
-	LayerLua::open(L);
+	LayerNS::open(L);
+	Layers::open(L);
 	return 1;
 }
 
