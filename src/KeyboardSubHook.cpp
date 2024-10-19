@@ -9,7 +9,6 @@
 #include "KeyStrokeLua.h"
 #include "Keyboard.h"
 #include "KeyboardHook.h"
-#include "LuaHeader.h"
 #include "Modifiers.h"
 #include "Stroke.h"
 
@@ -78,7 +77,7 @@ namespace KeyboardSubHook {
 		}
 	}
 
-	void SubHook::run() {
+	void SubHook::run(KeyStroke keyStroke) {
 		if (std::holds_alternative<int>(this->data)) {
 			lua_rawgeti(LuaHotKey::L, LUA_REGISTRYINDEX, std::get<int>(this->data));
 			KeyStrokeLua::newUserdata(LuaHotKey::L, KeyboardHook::keyStroke);
@@ -93,7 +92,7 @@ namespace KeyboardSubHook {
 			KeyStrokes keyStrokes = std::get<KeyStrokes>(this->data);
 			Keyboard::sendKeyStrokes(keyStrokes);
 		}
-		if (KeyboardHook::autoRepeat)
+		if (keyStroke.autorepeat)
 			KeyboardHook::block = this->flags.blockAutoRepeat;
 		else
 			KeyboardHook::block = this->flags.block;

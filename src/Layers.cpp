@@ -2,7 +2,6 @@
 
 #include <array>
 #include <memory>
-#include <span>
 #include <vector>
 
 #include "Layer.h"
@@ -46,10 +45,12 @@ namespace Layers {
 		return 0;
 	}
 
-	void run(std::span<int> keyFilter) {
+	void run(KeyStroke keyStroke) {
+		std::array<int, 5> filter = keyStroke.toFilter();
+
 		for (auto& layer: layers) {
-			layer->callIncludingDefault(keyFilter,
-					[](SubHook subHook) {subHook.run();}
+			layer->callIncludingDefault(filter,
+					[keyStroke](SubHook subHook) {subHook.run(keyStroke);}
 			);
 		}
 	}

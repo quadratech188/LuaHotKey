@@ -10,7 +10,6 @@ using namespace KeyboardSubHook;
 
 namespace KeyboardHook {
 	bool block;
-	bool autoRepeat;
 	bool shouldProcess = true;
 	KeyStroke keyStroke;
 	KeyStroke prevKeyStroke;
@@ -32,17 +31,9 @@ namespace KeyboardHook {
 
 		block = false;
 
-		keyStroke = KeyStroke(wParam, lParam);
-
-		autoRepeat = prevKeyStroke == keyStroke;
-
-		int indexArray[] = {(int)keyStroke.vkCode,
-			                (int)keyStroke.scanCode,
-			                Modifiers::createFromKeyboardState(),
-							autoRepeat,
-							(int)keyStroke.stroke};
+		keyStroke = KeyStroke::fromCurrentState(wParam, lParam);
 			
-		Layers::run(indexArray);
+		Layers::run(keyStroke);
 
 		prevKeyStroke = keyStroke;
 

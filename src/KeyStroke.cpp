@@ -1,21 +1,44 @@
 #include "KeyStroke.h"
 
-KeyStroke::KeyStroke(): vkCode(0), scanCode(0), stroke(Stroke()) {};
+#include <array>
 
-KeyStroke::KeyStroke(WPARAM wParam, LPARAM lParam) {
+#include "KeyboardHook.h"
+#include "Modifiers.h"
+
+KeyStroke KeyStroke::fromCurrentState(WPARAM wParam, LPARAM lParam) {
 	KBDLLHOOKSTRUCT strokeInfo = *(KBDLLHOOKSTRUCT*)lParam;
+
+	KeyStroke result;
 
 	switch(wParam) {
 		case WM_KEYDOWN:
 		case WM_SYSKEYDOWN:
-		this->stroke = Stroke::PRESS;
+		result.stroke = Stroke::PRESS;
 		break;
 		
 		case WM_KEYUP:
 		case WM_SYSKEYUP:
-		this->stroke = Stroke::RELEASE;
+		result.stroke = Stroke::RELEASE;
 	}
 
-	this->vkCode = strokeInfo.vkCode;
-	this->scanCode = strokeInfo.scanCode;
+	result.vkCode = strokeInfo.vkCode;
+	result.scanCode = strokeInfo.scanCode;
+	
+	result.autorepeat = KeyboardHook::prevKeyStroke.vkCode == result.vkCode
+		             && KeyboardHook::prevKeyStroke.scanCode == result.scanCode
+		             && KeyboardHook::prevKeyStroke.stroke == result.stroke;
+
+	result.modifiers = Modifiers::createFromKeyboardState();
+
+	return result;
+}
+
+std::array<int, 5> KeyStroke::toFilter() {
+	return {
+		(int)this->vkCode,
+		(int)this->scanCode,
+		this->modifiers,
+		this->autorepeat,
+		this->stroke
+	};
 }

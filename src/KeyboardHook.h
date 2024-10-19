@@ -7,8 +7,9 @@
 namespace KeyboardHook {
 	extern KeyStroke keyStroke;
 	extern bool block;
-	extern bool autoRepeat;
 	extern bool shouldProcess;
+
+	extern KeyStroke prevKeyStroke;
 
 	bool hook();
 	void unHook();

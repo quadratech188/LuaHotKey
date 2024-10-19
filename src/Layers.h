@@ -4,6 +4,7 @@
 #include <span>
 #include <vector>
 
+#include "KeyStroke.h"
 #include "Layer.h"
 #include "LuaHeader.h"
 
@@ -16,5 +17,5 @@ namespace Layers {
 
 	int set(lua_State* L);
 
-	void run(std::span<int> keyFilter);
+	void run(KeyStroke keyStroke);
 }

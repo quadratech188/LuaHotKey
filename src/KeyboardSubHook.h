@@ -7,13 +7,12 @@
 #include "AttributeTree.h"
 #include "Flags.h"
 #include "KeyStroke.h"
-#include "LuaHeader.h"
 
 namespace KeyboardSubHook {
 	struct SubHook {
 		std::variant<int, KeyStrokes> data;
 		Flags flags;
-		void run();
+		void run(KeyStroke keyStroke);
 		SubHook(): data(0), flags(Flags()) {};
 		SubHook(lua_State* L, int index);
 		SubHook(std::variant<int, KeyStrokes> data, Flags flags): flags(flags), data(data) {};
