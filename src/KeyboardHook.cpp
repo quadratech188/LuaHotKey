@@ -3,7 +3,6 @@
 #include <windows.h>
 
 #include "KeyStroke.h"
-#include "KeyboardSubHook.h"
 #include "Layers.h"
 #include "Modifiers.h"
 
@@ -43,9 +42,7 @@ namespace KeyboardHook {
 							autoRepeat,
 							(int)keyStroke.stroke};
 			
-		for (auto& layerIt: Layers::layers) {
-			layerIt->callIncludingDefault(indexArray, [](SubHook subHook) {subHook.run();});
-		}
+		Layers::run(indexArray);
 
 		prevKeyStroke = keyStroke;
 

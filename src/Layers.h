@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <span>
 #include <vector>
 
 #include "Layer.h"
@@ -14,4 +15,6 @@ namespace Layers {
 	void open(lua_State* L);
 
 	int set(lua_State* L);
+
+	void run(std::span<int> keyFilter);
 }

@@ -1,6 +1,8 @@
 #include "Layers.h"
 
+#include <array>
 #include <memory>
+#include <span>
 #include <vector>
 
 #include "Layer.h"
@@ -42,5 +44,13 @@ namespace Layers {
 			layers.push_back(userdataPtr->layer);
 		}
 		return 0;
+	}
+
+	void run(std::span<int> keyFilter) {
+		for (auto& layer: layers) {
+			layer->callIncludingDefault(keyFilter,
+					[](SubHook subHook) {subHook.run();}
+			);
+		}
 	}
 }
