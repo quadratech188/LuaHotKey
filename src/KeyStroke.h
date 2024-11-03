@@ -17,6 +17,8 @@ struct KeyStroke {
 	
 	static KeyStroke fromCurrentState(WPARAM, LPARAM);
 
+	void resolve(KeyStroke context);
+
 	bool operator==(const KeyStroke& other) const {
 		return (this->vkCode == other.vkCode
 			 && this->scanCode == other.scanCode

@@ -10,6 +10,7 @@ struct Stroke {
 		RELEASE,
 		MIRROR
 	};
+
 	Stroke(Value value): value(value) {};
 	Stroke(lua_State* L, int index);
 	Stroke(): value(PRESS) {};
@@ -25,6 +26,8 @@ struct Stroke {
 	operator int() const;
 
 	bool isRelease() const;
+
+	void resolve(Stroke context);
 private:
 	Value value;
 };

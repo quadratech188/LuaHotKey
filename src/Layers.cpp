@@ -4,15 +4,16 @@
 #include <memory>
 #include <vector>
 
+#include "Keyboard.h"
+#include "KeyboardHook.h"
 #include "Layer.h"
-#include "LuaHeader.h"
 
 using namespace LayerNS;
 using namespace KeyboardSubHook;
 
 namespace Layers {
 
-	std::vector<std::shared_ptr<Layer>> layers = std::vector<std::shared_ptr<Layer>>();
+	std::shared_ptr<Layer> firstLayer;
 
 	const luaL_Reg luaFunctions[] = {
 		{"set", set},
@@ -31,27 +32,40 @@ namespace Layers {
 
 		int length = lua_rawlen(L, 1);
 
-		layers.clear();
+		std::shared_ptr<Layer> layer, nextLayer;
 
-		layers.reserve(length);
+		lua_rawgeti(L, 1, 1); // First layer
+		
+		layer = LayerNS::get(L, -1)->layer;
 
-		for (int i = 0; i < length; i++) {
-			lua_rawgeti(L, 1, i + 1); // lua indices start at 1
+		firstLayer = layer;
 
-			LayerUdata* userdataPtr = LayerNS::get(L, -1);
+		for (int i = 0; i < length - 1; i++) {
+			lua_rawgeti(L, 1, i + 1 + 1); // We get the i+1-th element, and lua indices start at 1
 
-			layers.push_back(userdataPtr->layer);
+			nextLayer = LayerNS::get(L, -1)->layer;
+
+			layer->out = [nextLayer](KeyStrokes keyStrokes) {nextLayer->run(keyStrokes);};
+
+			layer = nextLayer;
 		}
+
+		// The final layer sends the processed keystrokes
+		
+		layer->out = [](KeyStrokes keyStrokes) {
+			if (!KeyboardHook::processed) return; // Nothing matched, we're going to send the original keystroke so don't do anything here
+
+			Keyboard::sendKeyStrokes(keyStrokes);
+		};
+
+
 		return 0;
 	}
 
 	void run(KeyStroke keyStroke) {
-		std::array<int, 5> filter = keyStroke.toFilter();
+		if (firstLayer == nullptr) return;
 
-		for (auto& layer: layers) {
-			layer->callIncludingDefault(filter,
-					[keyStroke](SubHook subHook) {subHook.run(keyStroke);}
-			);
-		}
+		std::array<KeyStroke, 1> temp = {keyStroke};
+		firstLayer->run(temp);
 	}
 }

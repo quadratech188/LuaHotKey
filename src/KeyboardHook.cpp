@@ -4,13 +4,11 @@
 
 #include "KeyStroke.h"
 #include "Layers.h"
-#include "Modifiers.h"
-
-using namespace KeyboardSubHook;
 
 namespace KeyboardHook {
 	bool block;
 	bool shouldProcess = true;
+	bool processed = false;
 	KeyStroke keyStroke;
 	KeyStroke prevKeyStroke;
 	HHOOK hookHandle;
@@ -30,12 +28,17 @@ namespace KeyboardHook {
 		}
 
 		block = false;
+		processed = false;
 
 		keyStroke = KeyStroke::fromCurrentState(wParam, lParam);
 			
 		Layers::run(keyStroke);
 
 		prevKeyStroke = keyStroke;
+
+		if (!processed) { // Nothing matched, we pass on the keystroke
+			return CallNextHookEx(NULL, nCode, wParam, lParam);
+		}
 
 		if (block) {
 			return -1;

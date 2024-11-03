@@ -8,7 +8,6 @@
 
 #include "KeyStroke.h"
 #include "KeyboardHook.h"
-#include "LuaHeader.h"
 
 namespace Keyboard {
 	BYTE keyboardState[256];

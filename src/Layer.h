@@ -1,15 +1,19 @@
 #pragma once
 
+#include <functional>
 #include <memory>
 
 #include "AttributeTree.h"
 #include "KeyboardSubHook.h"
-#include "LuaHeader.h"
 
 using namespace KeyboardSubHook;
 
 namespace LayerNS {
-	typedef AttributeTree<SubHook> Layer;
+	struct Layer {
+		AttributeTree<SubHook> data;
+		std::function<void(KeyStrokes)> out;
+		void run(KeyStrokes keyStrokes);
+	};
 
 	struct LayerUdata {
 		std::shared_ptr<Layer> layer;

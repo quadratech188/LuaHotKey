@@ -16,25 +16,28 @@ private:
 
 	AttributeNode root;
 
-	void callIncludingDefault(std::span<int> indexArray, std::function<void(T)> func, int currentIndex, AttributeNode& currentNode) {
+	bool callIncludingDefault(std::span<int> indexArray, std::function<void(T)> func, int currentIndex, AttributeNode& currentNode) {
 		if (indexArray.size() == currentIndex) {
 			if (currentNode.value.has_value()) {
 				func(currentNode.value.value());
 			}
-			return;
+			return true;
 		}
+
+		bool found = false;
 
 		auto it = currentNode.nodes.find(indexArray[currentIndex]);
 		if (it != currentNode.nodes.end()) {
-			callIncludingDefault(indexArray, func, currentIndex + 1, it->second);
+			found |= callIncludingDefault(indexArray, func, currentIndex + 1, it->second);
 		}
 		if (currentNode.defaultNode != nullptr) {
-			callIncludingDefault(indexArray, func, currentIndex + 1, *currentNode.defaultNode);
+			found |= callIncludingDefault(indexArray, func, currentIndex + 1, *currentNode.defaultNode);
 		}
+		return found;
 	}
 public:
-	void callIncludingDefault(std::span<int> indexArray, std::function<void(T)> func) {
-		callIncludingDefault(indexArray, func, 0, root);
+	bool callIncludingDefault(std::span<int> indexArray, std::function<void(T)> func) {
+		return callIncludingDefault(indexArray, func, 0, root);
 	}
 
 	T& operator[](std::span<std::optional<int>> indexArray) {

@@ -8,6 +8,7 @@ namespace KeyboardHook {
 	extern KeyStroke keyStroke;
 	extern bool block;
 	extern bool shouldProcess;
+	extern bool processed;
 
 	extern KeyStroke prevKeyStroke;
 

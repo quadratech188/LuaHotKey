@@ -48,3 +48,9 @@ bool Stroke::isRelease() const{
 			throw std::runtime_error("Invalid stroke value");
 	}
 }
+
+void Stroke::resolve(Stroke context) {
+	if (this->value == MIRROR) {
+		this->value = context.value;
+	}
+}
