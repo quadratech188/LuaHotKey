@@ -29,13 +29,13 @@ build = {
 		lua = {
 			['definitions.lhk_core'] = 'definitions/lhk_core.lua',
 
-			lhk = 'lhk/init.lua',
+			['lhk.init'] = 'lhk/init.lua',
 		    ['lhk.core_wrapper'] = 'lhk/core_wrapper.lua',
 		    ['lhk.modifiers'] = 'lhk/modifiers.lua',
 		    ['lhk.KeyStrokes'] = 'lhk/KeyStrokes.lua',
 			['lhk.utils'] = 'lhk/utils.lua',
 
-		    vkCode = 'vkCode/init.lua',
+		    ['vkCode.init'] = 'vkCode/init.lua',
 		    ['vkCode.vkCodes'] = 'vkCode/vkCodes.lua'
 
 		}
