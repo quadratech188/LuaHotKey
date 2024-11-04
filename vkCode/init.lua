@@ -8,6 +8,9 @@ local G = {
 ---@param char string
 ---@return integer
 function G.toVkCode(char)
+	if vkCodes[char] == nil then
+		error(('\'%s\' is not a valid vkCode'):format(char), 2)
+	end
 	return vkCodes[char]
 end
 
