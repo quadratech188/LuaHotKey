@@ -49,7 +49,7 @@ bool Stroke::isRelease() const{
 	}
 }
 
-void Stroke::resolve(Stroke context) {
+void Stroke::resolve(Stroke& context) {
 	if (this->value == MIRROR) {
 		this->value = context.value;
 	}

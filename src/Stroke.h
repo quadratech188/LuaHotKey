@@ -27,7 +27,7 @@ struct Stroke {
 
 	bool isRelease() const;
 
-	void resolve(Stroke context);
+	void resolve(Stroke& context);
 private:
 	Value value;
 };

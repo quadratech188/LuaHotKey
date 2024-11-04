@@ -33,7 +33,7 @@ KeyStroke KeyStroke::fromCurrentState(WPARAM wParam, LPARAM lParam) {
 	return result;
 }
 
-void KeyStroke::resolve(KeyStroke context) {
+void KeyStroke::resolve(KeyStroke& context) {
 	this->autorepeat = context.autorepeat;
 	this->modifiers = context.modifiers;
 	this->stroke.resolve(context.stroke);
