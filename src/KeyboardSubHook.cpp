@@ -36,7 +36,7 @@ namespace KeyboardSubHook {
 		return {vkCode, scanCode, modifiers, repeat, stroke};
 	}
 
-	std::variant<int, KeyStrokes> getActions(lua_State* L, int index) {
+	std::variant<int, std::vector<KeyStroke>> getActions(lua_State* L, int index) {
 		if (lua_isfunction(L, index)) {
 			lua_pushvalue(L, index); // Push function to the top of the stack
 			return luaL_ref(L, LUA_REGISTRYINDEX); // Pop the function from the stack
@@ -46,17 +46,19 @@ namespace KeyboardSubHook {
 			// Read keyStrokes table
 
 			int length = lua_rawlen(L, index);
-			KeyStroke* strokes = new KeyStroke[length];
+
+			std::vector<KeyStroke> strokes;
+			strokes.reserve(length);
 
 			for (int i = 0; i < length; i++) {
 				lua_rawgeti(L, index, i + 1); // lua indices start at 1
 													  //
 				// TODO: Better error message when the member is not a keystroke
-				strokes[i] = KeyStrokeLua::get(L, -1); // Top element
+				strokes.push_back(KeyStrokeLua::get(L, -1)); // Top element
 				
 				lua_pop(L, 1); // Pop top element
 			}
-			return KeyStrokes(strokes, length);
+			return strokes;
 		}
 		else {
 			luaL_argcheck(L, 0, index, "Expected KeyStroke array or lua function");
@@ -76,7 +78,7 @@ namespace KeyboardSubHook {
 		}
 	}
 
-	void SubHook::run(KeyStroke context, std::function<void(KeyStrokes)> out) {
+	void SubHook::run(KeyStroke context, std::function<void(KeyStroke)> out) {
 		KeyboardHook::processed = true;
 		if (std::holds_alternative<int>(this->data)) {
 			lua_rawgeti(LuaHotKey::L, LUA_REGISTRYINDEX, std::get<int>(this->data));
@@ -88,12 +90,12 @@ namespace KeyboardSubHook {
 				std::cout << lua_tostring(LuaHotKey::L, -1) << std::endl;
 			}
 		}
-		else if (std::holds_alternative<KeyStrokes>(this->data)) {
-			KeyStrokes keyStrokes = std::get<KeyStrokes>(this->data);
-			for (auto& keyStroke: keyStrokes) {
+		else if (std::holds_alternative<std::vector<KeyStroke>>(this->data)) {
+			std::vector<KeyStroke> keyStrokes = std::get<std::vector<KeyStroke>>(this->data);
+			for (auto keyStroke: keyStrokes) {
 				keyStroke.resolve(context); // Make stuff like MIRROR keystrokes work correctly
+				out(keyStroke);
 			}
-			out(keyStrokes);
 		}
 		if (context.autorepeat)
 			KeyboardHook::block = this->flags.blockAutoRepeat;

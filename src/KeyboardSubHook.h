@@ -10,16 +10,16 @@
 
 namespace KeyboardSubHook {
 	struct SubHook {
-		std::variant<int, KeyStrokes> data;
+		std::variant<int, std::vector<KeyStroke>> data;
 		Flags flags;
-		void run(KeyStroke context, std::function<void(KeyStrokes)> out);
+		void run(KeyStroke context, std::function<void(KeyStroke)> out);
 		SubHook(): data(0), flags(Flags()) {};
 		SubHook(lua_State* L, int index);
-		SubHook(std::variant<int, KeyStrokes> data, Flags flags): flags(flags), data(data) {};
+		SubHook(std::variant<int, std::vector<KeyStroke>> data, Flags flags): flags(flags), data(data) {};
 	};
 	
 	extern AttributeTree<SubHook> subHooks;
 	
 	std::array<std::optional<int>, 5> getFilter(lua_State* L, int index);
-	std::variant<int, KeyStrokes> getActions(lua_State* L, int index);
+	std::variant<int, std::vector<KeyStroke>> getActions(lua_State* L, int index);
 }

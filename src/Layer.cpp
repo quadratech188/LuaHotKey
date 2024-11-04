@@ -1,7 +1,6 @@
 #include "Layer.h"
 
 #include <optional>
-#include <iostream>
 
 #include "KeyboardSubHook.h"
 #include "LuaHeader.h"
@@ -59,21 +58,19 @@ namespace LayerNS {
 		return LUA_CHECKUSERDATA(LayerUdata, L, index, metatableName);
 	}
 	
-	void Layer::run(KeyStrokes keyStrokes) {
-		for (auto& keyStroke: keyStrokes) {
-			std::array<int, 5> filter = keyStroke.toFilter();
-			/*
-			for (int i = 0;i < 5; i++) {
-				std::cout << filter[i] << std::endl;
-			}
-			*/
-			
-			bool found = this->data.callIncludingDefault(filter, [keyStroke, this](SubHook subHook) {subHook.run(keyStroke, this->out);});
+	void Layer::run(KeyStroke keyStroke) {
+		std::array<int, 5> filter = keyStroke.toFilter();
 
-			if (!found) {
-				std::array<KeyStroke, 1> temp = {keyStroke};
-				this->out(temp);
-			}
+		/*
+		for (int i = 0;i < 5; i++) {
+			std::cout << filter[i] << std::endl;
+		}
+		*/
+		
+		bool found = this->data.callIncludingDefault(filter, [keyStroke, this](SubHook subHook) {subHook.run(keyStroke, this->out);});
+
+		if (!found) {
+			this->out(keyStroke);
 		}
 	}
 }

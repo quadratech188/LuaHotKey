@@ -11,8 +11,8 @@ using namespace KeyboardSubHook;
 namespace LayerNS {
 	struct Layer {
 		AttributeTree<SubHook> data;
-		std::function<void(KeyStrokes)> out;
-		void run(KeyStrokes keyStrokes);
+		std::function<void(KeyStroke)> out;
+		void run(KeyStroke keyStroke);
 	};
 
 	struct LayerUdata {

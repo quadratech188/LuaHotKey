@@ -1,7 +1,5 @@
 #pragma once
 
-#include <span>
-
 #include <windows.h>
 
 #include "Stroke.h"
@@ -25,5 +23,3 @@ struct KeyStroke {
 			 && this->stroke == other.stroke);
 	}
 };
-
-typedef std::span<KeyStroke> KeyStrokes;

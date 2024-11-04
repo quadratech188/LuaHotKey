@@ -1,6 +1,7 @@
 #include "Layers.h"
 
 #include <array>
+#include <iostream>
 #include <memory>
 #include <vector>
 
@@ -45,17 +46,18 @@ namespace Layers {
 
 			nextLayer = LayerNS::get(L, -1)->layer;
 
-			layer->out = [nextLayer](KeyStrokes keyStrokes) {nextLayer->run(keyStrokes);};
+			layer->out = [nextLayer](KeyStroke keyStroke) {nextLayer->run(keyStroke);};
 
 			layer = nextLayer;
 		}
 
 		// The final layer sends the processed keystrokes
 		
-		layer->out = [](KeyStrokes keyStrokes) {
+		layer->out = [](KeyStroke keyStroke) {
 			if (!KeyboardHook::processed) return; // Nothing matched, we're going to send the original keystroke so don't do anything here
 
-			Keyboard::sendKeyStrokes(keyStrokes);
+			std::array<KeyStroke, 1> temp = {keyStroke};
+			Keyboard::sendKeyStrokes(temp);
 		};
 
 
@@ -65,7 +67,6 @@ namespace Layers {
 	void run(KeyStroke keyStroke) {
 		if (firstLayer == nullptr) return;
 
-		std::array<KeyStroke, 1> temp = {keyStroke};
-		firstLayer->run(temp);
+		firstLayer->run(keyStroke);
 	}
 }

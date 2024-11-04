@@ -1,9 +1,10 @@
 #pragma once
 
+#include <span>
+
 #include <windows.h>
 
 #include "KeyStroke.h"
-#include "LuaHeader.h"
 
 namespace Keyboard {
 	extern BYTE keyboardState[256];
@@ -11,5 +12,5 @@ namespace Keyboard {
 	int getKeyState(lua_State* L);
 	bool isOn(DWORD vkCode);
 	void updateKeyboardState();
-	void sendKeyStrokes(KeyStrokes keyStrokes);
+	void sendKeyStrokes(std::span<KeyStroke> keyStrokes);
 }
