@@ -23,10 +23,9 @@ end
 
 G.Layer = {}
 
----Create a new layer (Not activated by default)
----@param name string Name of the layer
+---Create a new layer
 ---@return lhk.Layer
-function G.Layer.new(name)
+function G.Layer.new()
 end
 
 ---@class lhk.Layer
