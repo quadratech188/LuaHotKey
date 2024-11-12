@@ -26,7 +26,7 @@ namespace KeyboardSubHook {
 		std::optional<int> stroke = lua_isstring(L, -1)? std::optional<int>(Stroke(L, -1)): std::nullopt;
 		lua_pop(L, 1);
 		lua_getfield(L, index, "autorepeated");
-		std::optional<int> repeat = lua_isboolean(L, -1)? std::optional<int>(lua_toboolean(L, -1) + 1): std::nullopt; // 2 is when key is autorepeated (why would you want this), 
+		std::optional<int> repeat = lua_isboolean(L, -1)? std::optional<int>(lua_toboolean(L, -1)): std::nullopt; // 2 is when key is autorepeated (why would you want this), 
 		lua_pop(L, 1);
 
 		lua_getfield(L, index, "modifiers");
