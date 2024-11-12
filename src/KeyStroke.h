@@ -11,9 +11,15 @@ struct KeyStroke {
 	int modifiers;
 	bool autorepeat;
 
+	KeyStroke():
+		vkCode(0), scanCode(0), stroke(Stroke::PRESS), autorepeat(false) {}
+
+	KeyStroke(DWORD vkCode, DWORD scanCode, Stroke stroke, int modifiers, bool autorepeat):
+		vkCode(vkCode), scanCode(scanCode), stroke(stroke), modifiers(modifiers), autorepeat(autorepeat) {}
+
+	KeyStroke(WPARAM wParam, LPARAM lParam);
+
 	std::array<int, 5> toFilter();
-	
-	static KeyStroke fromCurrentState(WPARAM, LPARAM);
 
 	void resolve(KeyStroke& context);
 

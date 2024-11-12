@@ -10,8 +10,6 @@ namespace KeyboardHook {
 	extern bool shouldProcess;
 	extern bool processed;
 
-	extern KeyStroke prevKeyStroke;
-
 	bool hook();
 	void unHook();
 

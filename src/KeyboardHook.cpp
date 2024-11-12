@@ -10,7 +10,6 @@ namespace KeyboardHook {
 	bool shouldProcess = true;
 	bool processed = false;
 	KeyStroke keyStroke;
-	KeyStroke prevKeyStroke;
 	HHOOK hookHandle;
 
 	bool hook() {
@@ -30,11 +29,9 @@ namespace KeyboardHook {
 		block = false;
 		processed = false;
 
-		keyStroke = KeyStroke::fromCurrentState(wParam, lParam);
+		keyStroke = KeyStroke(wParam, lParam);
 			
 		Layers::run(keyStroke);
-
-		prevKeyStroke = keyStroke;
 
 		if (!processed) { // Nothing matched, we pass on the keystroke
 			return CallNextHookEx(NULL, nCode, wParam, lParam);
