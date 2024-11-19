@@ -53,6 +53,12 @@ local Layer = {}
 function Layer.register(self, keyFilter, actions, flags)
 end
 
+---Pass on a `keystroke` to the next layer.
+---@param self lhk.Layer
+---@param keyStroke lhk.KeyStroke
+function Layer.yield(self, keyStroke)
+end
+
 G.layers = {}
 
 ---Sets an array of layers to be used by lhk

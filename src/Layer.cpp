@@ -2,6 +2,7 @@
 
 #include <optional>
 
+#include "KeyStrokeLua.h"
 #include "KeyboardSubHook.h"
 #include "LuaHeader.h"
 
@@ -16,6 +17,7 @@ namespace LayerNS {
 	
 	const luaL_Reg luaMethods[] = {
 		{"register", reg},
+		{"yield", yield},
 		{NULL, NULL}
 	};
 
@@ -51,6 +53,12 @@ namespace LayerNS {
 
 		userdataPtr->layer->data[keyFilter] = subHook;
 
+		return 0;
+	}
+
+	int yield(lua_State* L) {
+		LayerUdata* userdataPtr = LUA_CHECKUSERDATA(LayerUdata, L, 1, metatableName);
+		userdataPtr->layer->out(KeyStrokeLua::get(L, 2));
 		return 0;
 	}
 

@@ -13,6 +13,8 @@ namespace LayerNS {
 		AttributeTree<SubHook> data;
 		std::function<void(KeyStroke)> out;
 		void run(KeyStroke keyStroke);
+
+		Layer(): out([](KeyStroke){}) {} // Empty out function
 	};
 
 	struct LayerUdata {
@@ -27,6 +29,8 @@ namespace LayerNS {
 	int newUserdata(lua_State* L);
 
 	int reg(lua_State* L);
+
+	int yield(lua_State* L);
 
 	LayerUdata* get(lua_State* L, int index);
 }
