@@ -16,3 +16,9 @@ template <typename T>
 inline T* luaExt_newuserdata(lua_State* L) {
 	return (T*)lua_newuserdata(L, sizeof(T));
 }
+template <typename T, typename... Args>
+inline T* luaExt_emplaceuserdata(lua_State* L, Args&&... args) {
+	T* result = luaExt_newuserdata<T>(L);
+	new (result) T(std::forward<Args>(args)...);
+	return result;
+}

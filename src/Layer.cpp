@@ -34,7 +34,7 @@ namespace LayerNS {
 	}
 	
 	int newUserdata(lua_State* L) {
-		new (luaExt_newuserdata<LayerUdata>(L)) LayerUdata();
+		luaExt_emplaceuserdata<LayerUdata>(L);
 
 		luaL_getmetatable(L, metatableName);
 		lua_setmetatable(L, -2);

@@ -101,7 +101,7 @@ namespace KeyStrokeLua {
 
 		Stroke stroke = numArgs >= 3? Stroke(L, 3): Stroke();
 
-		new (luaExt_newuserdata<KeyStroke>(L)) KeyStroke(vkCode, scanCode, stroke, 0, false);
+		luaExt_emplaceuserdata<KeyStroke>(L, vkCode, scanCode, stroke, 0, false);
 
 		luaL_getmetatable(L, metatableName);
 		lua_setmetatable(L, -2);
@@ -110,7 +110,7 @@ namespace KeyStrokeLua {
 	}
 
 	int newUserdata(lua_State* L, WPARAM wParam, LPARAM lParam) {
-		new (luaExt_newuserdata<KeyStroke>(L)) KeyStroke(wParam, lParam);
+		luaExt_emplaceuserdata<KeyStroke>(L, wParam, lParam);
 
 		luaL_getmetatable(L, metatableName);
 		lua_setmetatable(L, -2);
@@ -120,7 +120,7 @@ namespace KeyStrokeLua {
 	}
 
 	int newUserdata(lua_State* L, KeyStroke keyStroke) {
-		*luaExt_newuserdata<KeyStroke>(L) = keyStroke;
+		luaExt_emplaceuserdata<KeyStroke>(L, keyStroke);
 
 		luaL_getmetatable(L, metatableName);
 		lua_setmetatable(L, -2);
