@@ -1,11 +1,18 @@
 #pragma once
 
 #include "lua.hpp"
+#include <string_view>
 
 #if defined(LUA_VERSION_NUM_) && LUA_VERSION_NUM < 502
 	#define luaL_setfuncs(L, l, nup) luaL_register(L, NULL, l, nup)
 	#define lua_rawlen(L, idx) lua_objlen(L, idx)
 #endif
 
-#define LUA_NEWUSERDATA(type, L) (type*)lua_newuserdata(L, sizeof(type))
-#define LUA_CHECKUSERDATA(type, L, index, typeName) (type*)luaL_checkudata(L, index, typeName)
+template <typename T>
+inline T* luaExt_checkudata(lua_State* L, const int index, const std::string_view metatableName) {
+	return (T*)luaL_checkudata(L, index, metatableName.data());
+}
+template <typename T>
+inline T* luaExt_newuserdata(lua_State* L) {
+	return (T*)lua_newuserdata(L, sizeof(T));
+}

@@ -1,6 +1,7 @@
 #include "KeyboardSubHook.h"
 
 #include <array>
+#include <exception>
 #include <iostream>
 #include <optional>
 
@@ -52,9 +53,8 @@ namespace KeyboardSubHook {
 
 			for (int i = 0; i < length; i++) {
 				lua_rawgeti(L, index, i + 1); // lua indices start at 1
-													  //
-				// TODO: Better error message when the member is not a keystroke
-				strokes.push_back(KeyStrokeLua::get(L, -1)); // Top element
+				
+				strokes.push_back(*KeyStrokeLua::get(L, -1));
 				
 				lua_pop(L, 1); // Pop top element
 			}

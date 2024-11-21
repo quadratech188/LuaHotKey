@@ -34,9 +34,7 @@ namespace LayerNS {
 	}
 	
 	int newUserdata(lua_State* L) {
-		LayerUdata* userdataPtr = LUA_NEWUSERDATA(LayerUdata, L);
-
-		new (userdataPtr) LayerUdata();
+		new (luaExt_newuserdata<LayerUdata>(L)) LayerUdata();
 
 		luaL_getmetatable(L, metatableName);
 		lua_setmetatable(L, -2);
@@ -45,25 +43,22 @@ namespace LayerNS {
 	}
 
 	int reg(lua_State* L) {
-		LayerUdata* userdataPtr = LUA_CHECKUSERDATA(LayerUdata, L, 1, metatableName);
-
 		std::array<std::optional<int>, 5> keyFilter = KeyboardSubHook::getFilter(L, 2);
 
 		SubHook subHook = SubHook(L, 3);
 
-		userdataPtr->layer->data[keyFilter] = subHook;
+		get(L, 1)->layer->data[keyFilter] = subHook;
 
 		return 0;
 	}
 
 	int yield(lua_State* L) {
-		LayerUdata* userdataPtr = LUA_CHECKUSERDATA(LayerUdata, L, 1, metatableName);
-		userdataPtr->layer->out(KeyStrokeLua::get(L, 2));
+		get(L, 1)->layer->out(*KeyStrokeLua::get(L, 2));
 		return 0;
 	}
 
 	LayerUdata* get(lua_State* L, int index) {
-		return LUA_CHECKUSERDATA(LayerUdata, L, index, metatableName);
+		return luaExt_checkudata<LayerUdata>(L, index, metatableName);
 	}
 	
 	void Layer::run(KeyStroke keyStroke) {

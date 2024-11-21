@@ -33,12 +33,13 @@ namespace KeyStrokeLua {
 		lua_pop(L, 1); // Pop metatable reference
 	}
 
-	KeyStroke get(lua_State* L, int index) {
-		return *LUA_CHECKUSERDATA(KeyStroke, L, index, metatableName);
+	KeyStroke* get(lua_State* L, int index) {
+
+		return luaExt_checkudata<KeyStroke>(L, index, metatableName);
 	}
 
 	int set(lua_State* L) {
-		KeyStroke* keyStroke = LUA_CHECKUSERDATA(KeyStroke, L, 1, metatableName);
+		KeyStroke* keyStroke = get(L, 1);
 		std::string index = std::string(luaL_checkstring(L, 2));
 
 		if (index == "vkCode") {
@@ -58,7 +59,7 @@ namespace KeyStrokeLua {
 
 
 	int get(lua_State* L) {
-		KeyStroke* keyStroke = LUA_CHECKUSERDATA(KeyStroke, L, 1, metatableName);
+		KeyStroke* keyStroke = luaExt_checkudata<KeyStroke>(L, 1, metatableName);
 		std::string index = std::string(luaL_checkstring(L, 2));
 
 		if (index == "vkCode") {
@@ -77,7 +78,7 @@ namespace KeyStrokeLua {
 	}
 
 	int toString(lua_State* L) {
-		KeyStroke* keyStroke = LUA_CHECKUSERDATA(KeyStroke, L, 1, metatableName);
+		KeyStroke* keyStroke = luaExt_checkudata<KeyStroke>(L, 1, metatableName);
 
 		std::string data = std::format("vkCode: {}, scanCode: {}, stroke: {}",
 				keyStroke->vkCode != 0? std::to_string(keyStroke->vkCode): "Unspecified",
@@ -94,20 +95,13 @@ namespace KeyStrokeLua {
 
 		int numArgs = lua_gettop(L);
 		
-		keyStroke.vkCode = (numArgs >= 1 && !lua_isnil(L, 1))? lua_tointeger(L, 1): 0;
+		int vkCode = (numArgs >= 1 && !lua_isnil(L, 1))? lua_tointeger(L, 1): 0;
 
-		keyStroke.scanCode = (numArgs >= 2 && !lua_isnil(L, 2))? lua_tointeger(L, 2): 0;
+		int scanCode = (numArgs >= 2 && !lua_isnil(L, 2))? lua_tointeger(L, 2): 0;
 
-		if (numArgs >= 3) {
-			keyStroke.stroke = Stroke(L, 3);
-		}
-		else {
-			keyStroke.stroke = Stroke();
-		}
+		Stroke stroke = numArgs >= 3? Stroke(L, 3): Stroke();
 
-		KeyStroke* userdataPtr = LUA_NEWUSERDATA(KeyStroke, L);
-
-		*userdataPtr = keyStroke;
+		new (luaExt_newuserdata<KeyStroke>(L)) KeyStroke(vkCode, scanCode, stroke, 0, false);
 
 		luaL_getmetatable(L, metatableName);
 		lua_setmetatable(L, -2);
@@ -116,9 +110,7 @@ namespace KeyStrokeLua {
 	}
 
 	int newUserdata(lua_State* L, WPARAM wParam, LPARAM lParam) {
-		KeyStroke* userdataPtr = LUA_NEWUSERDATA(KeyStroke, L);
-
-		*userdataPtr = KeyStroke(wParam, lParam);
+		new (luaExt_newuserdata<KeyStroke>(L)) KeyStroke(wParam, lParam);
 
 		luaL_getmetatable(L, metatableName);
 		lua_setmetatable(L, -2);
@@ -128,7 +120,7 @@ namespace KeyStrokeLua {
 	}
 
 	int newUserdata(lua_State* L, KeyStroke keyStroke) {
-		*LUA_NEWUSERDATA(KeyStroke, L) = keyStroke;
+		*luaExt_newuserdata<KeyStroke>(L) = keyStroke;
 
 		luaL_getmetatable(L, metatableName);
 		lua_setmetatable(L, -2);
