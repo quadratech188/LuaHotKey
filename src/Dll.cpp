@@ -8,6 +8,7 @@
 #include "Layer.h"
 #include "Layers.h"
 #include "LuaHeader.h"
+#include "Modifiers.h"
 
 extern "C" __declspec(dllexport) int luaopen_lhk_core(lua_State* L) {
 	LuaHotKey::open(L); // Creates the module
@@ -16,6 +17,7 @@ extern "C" __declspec(dllexport) int luaopen_lhk_core(lua_State* L) {
 	Keyboard::open(L);
 	LayerNS::open(L);
 	Layers::open(L);
+	Modifiers::open(L);
 	return 1;
 }
 

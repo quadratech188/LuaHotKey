@@ -33,4 +33,6 @@ G.layers = lhk_core.layers
 
 G.keyboard = {}
 
+G.Modifiers = lhk_core.Modifiers
+
 return G

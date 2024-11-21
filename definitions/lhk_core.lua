@@ -39,7 +39,7 @@ local Layer = {}
 ---    `scanCode` (int): Matches the scancode of the pressed key
 ---    `stroke` ('press'|'release'): Matches the stroke of the pressed key
 ---    `autorepeated` (int): Matches whether the key was autorepeated
----    `modifiers` (int): A table of the state of each modifier key to be matched (LWIN, LMENU, LCONTROL, LSHIFT, RWIN, RMENU, RCONTROL, RSHIFT)
+---    `modifiers` ('lhk.Modifiers'): Matches the state of modifiers when the key is pressed
 ---}
 ---When an entry doesn't exist, the corresponding condition is ignored.
 ---@param actions function|table Can either be:
@@ -74,6 +74,22 @@ G.keyboard = {}
 ---@return integer state2
 function G.keyboard.getKeyState(vkCode)
 end
+
+G.Modifiers = {}
+---Create a new lhk.Modifiers userdata
+---@param modifiers table The table of modifier states. keys can be: LWin, LMenu, LCtrl, LShift, RWin, RMenu, RCtrl, RShift. Missing keys default to false.
+---Example:
+---lhk.Modifiers.new {
+---    LWin = true,
+---    LMenu = true
+---}
+---@return lhk.Modifiers
+function G.Modifiers.new(modifiers)
+end
+
+---@class lhk.Modifiers
+local Modifiers = {}
+
 
 ---Start lhk; this function will not return until lhk.stop() is called (Usually from a keyboard hook)
 function G.start()

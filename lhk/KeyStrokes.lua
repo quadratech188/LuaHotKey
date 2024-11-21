@@ -11,17 +11,17 @@ local G = {}
 function G.fromAHK(data)
 	local map = {
 
-		['^'] = 'LCONTROL',
-		['+'] = 'LSHIFT',
-		['!'] = 'LMENU',
-		['#'] = 'LWIN'
+		['^'] = 'LCtrl',
+		['+'] = 'LShift',
+		['!'] = 'LMenu',
+		['#'] = 'LWin'
 	}
 
 	local last_modifiers = {
-		['LCONTROL'] = false,
-		['LSHIFT'] = false,
-		['LMENU'] = false,
-		['LWIN'] = false
+		['LCtrl'] = false,
+		['LShift'] = false,
+		['LMenu'] = false,
+		['LWin'] = false
 	}
 
 	table.insert(data, {mod = '', key = nil}) -- Adding this resets all modifier keys
@@ -37,10 +37,10 @@ function G.fromAHK(data)
 		end
 
 		local modifiers = {
-			['LCONTROL'] = false,
-			['LSHIFT'] = false,
-			['LMENU'] = false,
-			['LWIN'] = false
+			['LCtrl'] = false,
+			['LShift'] = false,
+			['LMenu'] = false,
+			['LWin'] = false
 		}
 
 		for i = 1, #ahk_modifiers do

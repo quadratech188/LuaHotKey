@@ -28,7 +28,7 @@ KeyStroke::KeyStroke(WPARAM wParam, LPARAM lParam) {
 		&& this->scanCode == prev.scanCode
 		&& this->stroke == prev.stroke;
 
-	this->modifiers = Modifiers::createFromKeyboardState();
+	this->modifiers = Modifiers::fromKeyboardState();
 
 	prev = *this;
 }

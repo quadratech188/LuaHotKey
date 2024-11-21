@@ -30,9 +30,13 @@ namespace KeyboardSubHook {
 		std::optional<int> repeat = lua_isboolean(L, -1)? std::optional<int>(lua_toboolean(L, -1)): std::nullopt; // 2 is when key is autorepeated (why would you want this), 
 		lua_pop(L, 1);
 
+		std::optional<int> modifiers;
+
 		lua_getfield(L, index, "modifiers");
-		std::optional<int> modifiers = Modifiers::createFromLua(L, -1);
-		lua_pop(L, 1); // Pop 'modifiers' table
+		if (!lua_isnil(L, -1)) {
+			modifiers = *Modifiers::get(L, -1);
+		}
+		lua_pop(L, 1);
 
 		return {vkCode, scanCode, modifiers, repeat, stroke};
 	}

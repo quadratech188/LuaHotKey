@@ -1,15 +1,17 @@
+local core_wrapper = require 'lhk.core_wrapper'
+
 local G = {}
 
 ---Return an array of tables of modifier key states extracted from `str`
 ---If '!' exists in the string, the function will create a table where LMENU is on, and another where RMENU is on (unless < or > exists before it)
 ---@param str string
----@return table filterArray An array of modifier tables
+---@return table filterArray An array of `lhk.Modifiers`.
 function G.filterFromAHK(str)
 	local map = {
-		['#'] = 'WIN',
-		['!'] = 'MENU',
-		['^'] = 'CONTROL',
-		['+'] = 'SHIFT'
+		['#'] = 'Win',
+		['!'] = 'Menu',
+		['^'] = 'Ctrl',
+		['+'] = 'Shift'
 	}
 
 	local tables = {
@@ -30,7 +32,7 @@ function G.filterFromAHK(str)
 					end
 
 					new_modifiers['R' .. map[char]] = true
-					table.insert(new_tables, new_modifiers)
+					table.insert(new_tables, core_wrapper.Modifiers.new(new_modifiers))
 				end
 
 				if str:sub(i - 1, i - 1) ~= '>' then
@@ -41,7 +43,7 @@ function G.filterFromAHK(str)
 					end
 
 					new_modifiers['L' .. map[char]] = true
-					table.insert(new_tables, new_modifiers)
+					table.insert(new_tables, core_wrapper.Modifiers.new(new_modifiers))
 				end
 			end
 			tables = new_tables
