@@ -33,9 +33,6 @@ namespace Keyboard {
 	}
 
 	bool isOn(DWORD vkCode) {
-		// If we're currently handling the keypress, say that it's pressed. We're assuming that we 'just pressed shift' or 'didn't release shift yet'. This makes sense for most hotkeys.
-		if (vkCode == KeyboardHook::keyStroke.vkCode) return true;
-
 		SHORT keyState = GetKeyState(vkCode);
 		return keyState & 0x80;
 	}
