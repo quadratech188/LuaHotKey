@@ -75,7 +75,6 @@ namespace Modifiers {
 		modifiers += (1 << 5) * Keyboard::isOn(VK_RMENU);
 		modifiers += (1 << 6) * Keyboard::isOn(VK_RCONTROL);
 		modifiers += (1 << 7) * Keyboard::isOn(VK_RSHIFT);
-		std::cout << modifiers;
 		return modifiers;
 	}
 }
