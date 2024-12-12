@@ -56,6 +56,7 @@ namespace Layers {
 		layer->out = [](KeyStroke keyStroke) {
 			if (!KeyboardHook::processed) return; // Nothing matched, we're going to send the original keystroke so don't do anything here
 
+			KeyboardHook::block = true;
 			std::array<KeyStroke, 1> temp = {keyStroke};
 			Keyboard::sendKeyStrokes(temp);
 		};

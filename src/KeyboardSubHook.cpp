@@ -101,9 +101,10 @@ namespace KeyboardSubHook {
 				out(keyStroke);
 			}
 		}
-		if (context.autorepeat)
-			KeyboardHook::block = this->flags.blockAutoRepeat;
-		else
-			KeyboardHook::block = this->flags.block;
+		if (context.autorepeat && !this->flags.blockAutoRepeat)
+			out(context);
+
+		if (!context.autorepeat && !this->flags.block)
+			out(context);
 	}
 }
