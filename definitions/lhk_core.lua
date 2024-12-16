@@ -31,25 +31,24 @@ end
 ---@class lhk.Layer
 local Layer = {}
 
+---@class lhk.Filter
+---@field vkCode integer? Matches the virtual keycode of keys
+---@field scanCode integer? Matches the scancode of keys
+---@field stroke 'press'|'release'? Matches the stroke of keys
+---@field autorepeated boolean? Matches whether the key was autorepeated
+---@field modifiers lhk.Modifiers? Matches the state of modifiers when the key was pressed
+
+---@class lhk.Flags
+---@field block boolean? Whether to block the original keystroke; default `true`
+---@field blockAutorepeat boolean? Whether to block the original keystroke if it is autorepeated; default `block`
+
 ---Register a Keyboard hook that runs `actions` when `keyInfo` matches the currently pressed key
 ---@param self lhk.Layer
----@param keyFilter table Consists of:
----{
----    `vkCode` (int): Matches the virtual keycode of the pressed key
----    `scanCode` (int): Matches the scancode of the pressed key
----    `stroke` ('press'|'release'): Matches the stroke of the pressed key
----    `autorepeated` (int): Matches whether the key was autorepeated
----    `modifiers` ('lhk.Modifiers'): Matches the state of modifiers when the key is pressed
----}
----When an entry doesn't exist, the corresponding condition is ignored.
+---@param keyFilter lhk.Filter
 ---@param actions function|table Can either be:
 ---* A function: Receives a lhk.KeyStroke of the current keystroke
 ---* A lhk.KeyStroke array: Each keystroke is sent by lhk
----@param flags table? Consists of:
----{
----    `block` (bool): Whether to block the original keystroke; default `true`
----    `blockAutorepeat` (bool): Whether to block the original autorepeated keystroke; default `block`
----}
+---@param flags lhk.Flags?
 function Layer.register(self, keyFilter, actions, flags)
 end
 
