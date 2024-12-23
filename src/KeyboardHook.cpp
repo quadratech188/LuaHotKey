@@ -2,14 +2,10 @@
 
 #include <windows.h>
 
-#include "KeyStroke.h"
-#include "Layers.h"
+#include "Dll.h"
+#include "Keyboard.h"
 
 namespace KeyboardHook {
-	bool block;
-	bool shouldProcess = true;
-	bool processed = false;
-	KeyStroke keyStroke;
 	HHOOK hookHandle;
 
 	bool hook() {
@@ -22,26 +18,10 @@ namespace KeyboardHook {
 	}
 
 	LRESULT CALLBACK hookProc(int nCode, WPARAM wParam, LPARAM lParam) {
-		if (nCode < 0 || shouldProcess == false) {
-			return CallNextHookEx(NULL, nCode, wParam, lParam);
-		}
+		Keyboard keyboard(wParam, lParam);
 
-		block = false;
-		processed = false;
+		LuaHotKey::first->run(keyboard);
 
-		keyStroke = KeyStroke(wParam, lParam);
-			
-		Layers::run(keyStroke);
-
-		if (!processed) { // Nothing matched, we pass on the keystroke
-			return CallNextHookEx(NULL, nCode, wParam, lParam);
-		}
-
-		if (block) {
-			return -1;
-		}
-		else {
-			return CallNextHookEx(NULL, nCode, wParam, lParam);
-		}
+		return CallNextHookEx(NULL, nCode, wParam, lParam);
 	}
 }
